@@ -7,8 +7,8 @@ import (
 
 func (repo *PGRepo) GetBooks() ([]models.Book, error) {
 	rows, err := repo.pool.Query(context.Background(), `
-		select id,name,author_id,genre_id,price
-		from books;
+		select ID,Name,Author_id,Genre_id,Price
+		from Books;
 	`)
 	if err != nil {
 		return nil, err
@@ -33,7 +33,7 @@ func (repo *PGRepo) GetBooks() ([]models.Book, error) {
 }
 func (repo *PGRepo) CreateBook(item models.Book) error {
 	_, err := repo.pool.Exec(context.Background(), `
-		insert into books (name, author_id, genre_id, price)
+		insert into Books (Name, Author_id, Genre_id, price)
 		values ($1, $2, $3, $4)`,
 		item.Name,
 		item.Author_id,
@@ -42,19 +42,19 @@ func (repo *PGRepo) CreateBook(item models.Book) error {
 	)
 	return err
 }
-func (repo *PGRepo) DeleteByID(pos int) error {
+func (repo *PGRepo) DeleteBookByID(pos int) error {
 	_, err := repo.pool.Exec(context.Background(), `
-		delete from books where id = ($1)`,
+		delete from Books where ID = ($1)`,
 		pos,
 	)
 	return err
 }
-func (repo *PGRepo) GetByID(pos int) (*models.Book, error) {
+func (repo *PGRepo) GetBookByID(pos int) (*models.Book, error) {
 	var b models.Book
 	err := repo.pool.QueryRow(context.Background(), `
-		select id,name,author_id,genre_id,price
-		from books
-		where id = $1;`,
+		select ID,Name,Author_id,Genre_id,Price
+		from Books
+		where ID = $1;`,
 		pos,
 	).Scan(
 		&b.ID,
@@ -68,9 +68,9 @@ func (repo *PGRepo) GetByID(pos int) (*models.Book, error) {
 	}
 	return &b, nil
 }
-func (repo *PGRepo) ChangeByID(pos int, b models.Book) error {
+func (repo *PGRepo) ChangeBookByID(pos int, b models.Book) error {
 	_, err := repo.pool.Exec(context.Background(), `
-		update books set name = $1, author_id = $2,genre_id = $3, price = $4 where id = $5`,
+		update Books set Name = $1, Author_id = $2,Genre_id = $3, Price = $4 where ID = $5`,
 		b.Name,
 		b.Author_id,
 		b.Genre_id,

@@ -7,34 +7,34 @@ import (
 	"workWithDB/models"
 )
 
-func BoooksTesing() {
+func GenresTesing() {
 	db, err := New(ConnStr)
 	if err != nil {
 		log.Fatal(err.Error())
 	}
-	book := models.Book{Author_id: 1, Genre_id: 1, Name: "Идиот", Price: 198}
-	err = db.CreateBook(book)
+	genre := models.Genre{Genre: "Повесть"}
+	err = db.CreateGenre(genre)
 	if err != nil {
 		log.Fatal(err.Error())
 	}
-	err = db.DeleteBookByID(8)
+	err = db.DeleteGenreByID(3)
 	if err != nil {
 		log.Fatal(err.Error())
 	}
-	err = db.ChangeBookByID(9, book)
+	err = db.ChangeGenreByID(1, genre)
 	if err != nil {
 		log.Fatal(err.Error())
 	}
-	row, err := db.GetBookByID(9)
+	row, err := db.GetGenreByID(2)
 	if err != nil {
 		log.Fatal(err.Error())
 	}
-	fmt.Print(*row)
-	data, err := db.GetBooks()
+	fmt.Print(*row, "\n")
+	data, err := db.GetGenres()
 	if err != nil {
 		log.Fatal(err.Error())
 	}
 	for _, item := range data {
-		fmt.Printf("%d: %s, price: %d, author_id: %d, genre_id: %d\n", item.ID, item.Name, item.Price, item.Author_id, item.Genre_id)
+		fmt.Printf("%d: %s\n", item.ID, item.Genre)
 	}
 }

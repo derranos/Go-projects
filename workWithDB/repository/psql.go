@@ -20,3 +20,5 @@ func New(connStr string) (*PGRepo, error) {
 
 	return &PGRepo{mu: sync.Mutex{}, pool: pool}, nil
 }
+
+const ConnStr = "postgres://postgres:psql@localhost:5432/postgres"
