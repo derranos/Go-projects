@@ -9,4 +9,9 @@ if len(array1_data[0]) != len(array2_data):
     sys.exit()
 df1 = pd.DataFrame(array1_data)
 df2 = pd.DataFrame(array2_data)
-print(df1 @ df2)
+ans = (df1 @ df2).values.tolist()
+print("Answer:")
+for row in ans:
+    for val in row:
+        print(val, end = " ")
+    print()
