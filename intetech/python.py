@@ -2,13 +2,11 @@ import sys
 import pandas as pd
 import json
 
-array1_data = json.loads(sys.argv[1])
-array2_data = json.loads(sys.argv[2])
-if len(array1_data[0]) != len(array2_data):
-    print("Invalid range of matrix")
+df1 = pd.read_json(sys.argv[1])
+df2 = pd.read_json(sys.argv[2])
+if len(df1.iloc[0]) != len(df2):
+    print("Invalid range of matrix:", len(df1.iloc[0]), "!=", len(df2))
     sys.exit()
-df1 = pd.DataFrame(array1_data)
-df2 = pd.DataFrame(array2_data)
 ans = (df1 @ df2).values.tolist()
 print("Answer:")
 for row in ans:
